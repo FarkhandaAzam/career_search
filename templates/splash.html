@@ -10,7 +10,7 @@
         window.addEventListener("load", function () {
             setTimeout(function () {
                 window.location.href = "{{ url_for('login') }}";
-            }, 2000); // 2 seconds
+            }, 4000); // 4 seconds - gives time to read the welcome message
         });
     </script>
 </head>
@@ -22,8 +22,11 @@
                 <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
             </svg>
         </div>
-        <h1 class="splash-title">Career Search</h1>
-        <p class="splash-subtitle">Discover your path to success.</p>
+        <h1 class="splash-title">Welcome to Career Search</h1>
+        <p class="splash-subtitle">This is a live demo of my Career Search project.</p>
+        <p class="splash-subtitle" style="margin-top: 8px;">
+            <a href="https://github.com/FarkhandaAzam/career_search" target="_blank" style="color: #ffffff; text-decoration: underline; font-weight: 500;">Check out the GitHub repository</a>
+        </p>
 
         <div class="splash-dots">
             <span class="dot active"></span>
