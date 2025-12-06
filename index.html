@@ -221,6 +221,10 @@
             </a>
         </div>
         
+        <div id="countdownContainer" style="margin-top: 16px; font-size: 14px; color: rgba(255, 255, 255, 0.8); display: none;">
+            <p>⏱️ Redirecting to home page in <span id="countdown">3</span> seconds...</p>
+        </div>
+        
         <div class="note" id="appNote" style="margin-top: 24px;">
             <strong>📌 Important:</strong> Complete Flask application is deployed on Render.com. Click "Launch Full Application" button above to access all features including Quiz, GPA Calculator, Consultation Booking, and Admin Panel.
             <br><br>
@@ -238,18 +242,60 @@
         <script>
             // Update this URL after deploying on Render.com
             const LIVE_APP_URL = 'https://career-search.onrender.com'; // Change this to your Render URL after deployment
+            const HOME_PAGE_URL = LIVE_APP_URL + '/home'; // Direct link to home dashboard
             
             // Check if app is deployed
             const appUrlElement = document.getElementById('appUrl');
             const launchBtn = document.getElementById('launchApp');
+            const countdownContainer = document.getElementById('countdownContainer');
+            const countdownElement = document.getElementById('countdown');
+            
+            // Auto-redirect to home page after 3 seconds (optional - can be disabled)
+            let autoRedirectEnabled = true; // Set to false to disable auto-redirect
+            
+            // Manual redirect function
+            function redirectToApp() {
+                window.location.href = HOME_PAGE_URL;
+            }
+            
+            // Countdown timer function
+            function startCountdown(seconds) {
+                let countdown = seconds;
+                countdownContainer.style.display = 'block';
+                
+                const countdownInterval = setInterval(function() {
+                    countdown--;
+                    if (countdownElement) {
+                        countdownElement.textContent = countdown;
+                    }
+                    if (countdown <= 0) {
+                        clearInterval(countdownInterval);
+                        if (countdownElement) {
+                            countdownElement.textContent = '0';
+                        }
+                    }
+                }, 1000);
+            }
             
             // Try to detect if app is live
             fetch(LIVE_APP_URL, { method: 'HEAD', mode: 'no-cors' })
                 .then(() => {
                     appUrlElement.textContent = LIVE_APP_URL;
                     appUrlElement.style.color = '#4ade80';
-                    launchBtn.href = LIVE_APP_URL;
+                    launchBtn.href = HOME_PAGE_URL; // Direct to home page
+                    launchBtn.onclick = function(e) {
+                        e.preventDefault();
+                        redirectToApp();
+                    };
                     launchBtn.style.cursor = 'pointer';
+                    
+                    // Auto-redirect to home page after 3 seconds
+                    if (autoRedirectEnabled) {
+                        startCountdown(3);
+                        setTimeout(function() {
+                            window.location.href = HOME_PAGE_URL;
+                        }, 3000); // 3 seconds delay
+                    }
                 })
                 .catch(() => {
                     appUrlElement.textContent = 'Not deployed yet - Deploy on Render.com';
@@ -261,8 +307,8 @@
                     };
                 });
             
-            // Set default href
-            launchBtn.href = LIVE_APP_URL;
+            // Set default href to home page
+            launchBtn.href = HOME_PAGE_URL;
         </script>
     </div>
 </body>
