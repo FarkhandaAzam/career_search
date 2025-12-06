@@ -213,21 +213,57 @@
         </div>
         
         <div class="buttons">
-            <a href="https://github.com/FarkhandaAzam/career_search" target="_blank" class="btn btn-primary">
+            <a href="#" id="launchApp" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
+                🚀 Launch Full Application
+            </a>
+            <a href="https://github.com/FarkhandaAzam/career_search" target="_blank" class="btn btn-secondary">
                 View on GitHub
             </a>
-            <a href="https://github.com/FarkhandaAzam/career_search#readme" target="_blank" class="btn btn-secondary">
-                Documentation
+        </div>
+        
+        <div class="note" id="appNote" style="margin-top: 24px;">
+            <strong>📌 Important:</strong> Complete Flask application is deployed on Render.com. Click "Launch Full Application" button above to access all features including Quiz, GPA Calculator, Consultation Booking, and Admin Panel.
+            <br><br>
+            <strong>🔗 Live App URL:</strong> <span id="appUrl" style="font-weight: 600;">Deploying on Render.com...</span>
+            <br><br>
+            <strong>💡 To Deploy:</strong> Follow instructions in <code>QUICK_DEPLOY.md</code> or visit Render.com and connect your GitHub repository.
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="https://github.com/FarkhandaAzam/career_search" target="_blank" class="github-link">
+                Check out the GitHub repository →
             </a>
         </div>
         
-        <div class="note">
-            <strong>Note:</strong> This is a Flask application. To run the full application locally, clone the repository and follow the setup instructions in the README. For live deployment, consider using services like Render, Heroku, or Railway.
-        </div>
-        
-        <a href="https://github.com/FarkhandaAzam/career_search" target="_blank" class="github-link">
-            Check out the GitHub repository →
-        </a>
+        <script>
+            // Update this URL after deploying on Render.com
+            const LIVE_APP_URL = 'https://career-search.onrender.com'; // Change this to your Render URL after deployment
+            
+            // Check if app is deployed
+            const appUrlElement = document.getElementById('appUrl');
+            const launchBtn = document.getElementById('launchApp');
+            
+            // Try to detect if app is live
+            fetch(LIVE_APP_URL, { method: 'HEAD', mode: 'no-cors' })
+                .then(() => {
+                    appUrlElement.textContent = LIVE_APP_URL;
+                    appUrlElement.style.color = '#4ade80';
+                    launchBtn.href = LIVE_APP_URL;
+                    launchBtn.style.cursor = 'pointer';
+                })
+                .catch(() => {
+                    appUrlElement.textContent = 'Not deployed yet - Deploy on Render.com';
+                    appUrlElement.style.color = '#fbbf24';
+                    launchBtn.onclick = function(e) {
+                        e.preventDefault();
+                        alert('Please deploy the app on Render.com first!\n\nSteps:\n1. Go to render.com\n2. Connect GitHub repo\n3. Deploy as Web Service\n4. Update LIVE_APP_URL in index.html');
+                        window.open('https://render.com', '_blank');
+                    };
+                });
+            
+            // Set default href
+            launchBtn.href = LIVE_APP_URL;
+        </script>
     </div>
 </body>
 </html>
